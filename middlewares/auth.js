@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'
 import userInstance from '../services/user.services.js';
-//verify token
 import asyncHandler from 'express-async-handler';
 
 const auth=asyncHandler(async (req,res,next)=>{

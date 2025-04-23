@@ -4,7 +4,8 @@ import express from "express";
 import connectDB from "./config/db.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
-import { rateLimit } from 'express-rate-limit'
+import { rateLimit } from 'express-rate-limit';
+import cors from "cors";
 connectDB();
 let app = express();
 
@@ -12,15 +13,15 @@ let app = express();
 app.use(express.json());
 
 const limiter = rateLimit({
-	windowMs: 60 * 1000, 
-	limit: 5,
-	standardHeaders: 'draft-8',
-	legacyHeaders: false, 
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
 })
 
 // Apply the rate limiting middleware to all requests.
 app.use(limiter)
-
+app.use(cors()) // Enable CORS for all routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 
